@@ -1,0 +1,18 @@
+services:
+    report_runner:
+        class: GepurIt\ReportBundle\Command\RunReportGeneratorCommand
+        arguments:
+            - "@logger"
+            - '@report.rabbit_helper'
+            - '%kernel.project_dir%'
+        tags:
+           - { name: 'console.command' }
+
+    report_listener:
+        class: GepurIt\ReportBundle\Command\ExecuteReportGeneratorCommand
+        arguments:
+            - '@report_handler'
+            - '@doctrine.odm.mongodb.document_manager'
+            - '@logger'
+        tags:
+            - { name: 'console.command' }
