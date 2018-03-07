@@ -8,6 +8,7 @@
 
 namespace GepurIt\ReportBundle\ReportType\ReportDataTypes;
 
+use GepurIt\ReportBundle\DataType\Integer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,11 +20,12 @@ class IntegerTest extends TestCase
     public function testGetTypeId()
     {
         $type = new Integer();
-        $this->assertEquals('integer', $type->getTypeId());
+        $this->assertEquals('integer', $type->getKey());
     }
 
     /**
      * @dataProvider dataProvider
+     * @param $data
      */
     public function testProcess($data)
     {

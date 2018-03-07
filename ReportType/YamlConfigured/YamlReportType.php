@@ -7,12 +7,13 @@
 namespace GepurIt\ReportBundle\ReportType\YamlConfigured;
 
 use GepurIt\ReportBundle\ReportType\ReportTypeInterface;
+use Yawa20\RegistryBundle\Registrable\RegistrableInterface;
 
 /**
  * Class YamlConfiguredReportType
  * @package ReportBundle\ReportType
  */
-class YamlReportType implements ReportTypeInterface
+class YamlReportType implements ReportTypeInterface, RegistrableInterface
 {
     /**
      * @var string $typeId
@@ -146,5 +147,13 @@ class YamlReportType implements ReportTypeInterface
         $this->reportMeta = $config['report_meta'];
         $this->reportClass = $config['type']['report_class'];
         $this->group = ($config['type']['group'])??$this->group;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return $this->getTypeId();
     }
 }

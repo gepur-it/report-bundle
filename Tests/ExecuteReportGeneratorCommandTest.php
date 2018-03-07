@@ -8,12 +8,12 @@ namespace GepurIt\ReportBundle\Tests;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
-use GepurIt\ReportBundle\Command\ExecuteReportGeneratorCommand;
+use GepurIt\ReportBundle\ConsoleCommand\ExecuteReportGeneratorCommand;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\Exception\GeneratorNotFoundException;
 use GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

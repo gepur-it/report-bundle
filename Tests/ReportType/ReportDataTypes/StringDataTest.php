@@ -8,6 +8,7 @@
 
 namespace GepurIt\ReportBundle\ReportType\ReportDataTypes;
 
+use GepurIt\ReportBundle\DataType\StringData;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class StringDataTest extends TestCase
     public function testGetTypeId()
     {
         $type = new StringData();
-        $this->assertEquals('string', $type->getTypeId());
+        $this->assertEquals('string', $type->getKey());
     }
 
     /**

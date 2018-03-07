@@ -6,7 +6,7 @@
  * Time: 12:14
  */
 
-namespace GepurIt\ReportBundle\ReportType;
+namespace GepurIt\ReportBundle\DataType;
 
 /**
  * Interface ReportDataTypeInterface
@@ -19,10 +19,4 @@ interface ReportDataTypeInterface
      * @return mixed
      */
     public function process($data);
-
-    /**
-     * @return string
-     */
-    public function getTypeId() :string;
 }
-

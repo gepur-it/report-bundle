@@ -17,4 +17,3 @@ class GeneratorNotFoundException extends ReportException
         parent::__construct("No generators found for {$commandClass}");
     }
 }
-

@@ -19,13 +19,18 @@
         "symfony/process": "^4.0",
         "symfony/finder": "^4.0",
         "doctrine/mongodb-odm-bundle": "^3.4",
-        "symfony/property-access": "^4.0"
+        "symfony/property-access": "^4.0",
+        "yawa20/registry-bundle": "^1.0"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Andrii Yakovlev",
             "email": "yawa20@gmail.com"
+        },
+        {
+            "name": "Marina Mileva",
+            "email": "m934222258@gmail.com"
         }
     ],
     "autoload": {

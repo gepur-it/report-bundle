@@ -8,12 +8,14 @@
 
 namespace GepurIt\ReportBundle\ReportType;
 
+use Yawa20\RegistryBundle\Registrable\RegistrableInterface;
+
 /**
  * Class SimpleReportType
  * @package ReportBundle\ReportType
  * @JMS\ExclusionPolicy("all")
  */
-class SimpleReportType implements ReportTypeInterface
+class SimpleReportType implements ReportTypeInterface, RegistrableInterface
 {
     /**
      * @var string $typeId
@@ -178,5 +180,13 @@ class SimpleReportType implements ReportTypeInterface
     public function setGroup(string $group) :void
     {
         $this->group = $group;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return $this->getTypeId();
     }
 }

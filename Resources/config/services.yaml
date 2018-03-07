@@ -1,0 +1,45 @@
+imports:
+    - { resource: console_commands.yaml}
+
+services:
+    report.data_type_registry:
+        class: Yawa20\RegistryBundle\Registry\SimpleRegistry
+        arguments: ['GepurIt\ReportBundle\DataType\ReportDataTypeInterface']
+        public: true
+
+    GepurIt\ReportBundle\DataType\:
+        resource: '../../DataType/*'
+        exclude: '../../DataType/ReportDataTypeInterface.php'
+        tags: [ {name: 'app.registry.item', registry: 'report.data_type_registry'} ]
+
+    GepurIt\ReportBundle\Helpers\:
+        resource: '../../Helpers/*'
+
+    report.rabbit_helper:
+        class: GepurIt\ReportBundle\Helpers\RabbitHelper
+        arguments:
+            - '@rabbit_mq'
+
+    GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler:
+        class: GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler
+        arguments:
+             - '@doctrine.odm.mongodb.document_manager'
+             - '@logger'
+             - '@report.rabbit_helper'
+        public: true
+
+    report_handler:
+        alias: GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler
+        public: true
+
+    report.type_registry:
+        class: Yawa20\RegistryBundle\Registry\SimpleRegistry
+        arguments: ['GepurIt\ReportBundle\ReportType\ReportTypeInterface']
+        public: true
+
+    report.command_request_factory:
+        class: GepurIt\ReportBundle\CreateCommand\ReportCommandRequestFactory
+        public: true
+        arguments:
+            - '@report.data_type_registry'
+            - '@property_accessor'

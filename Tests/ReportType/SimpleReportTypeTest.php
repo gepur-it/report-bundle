@@ -8,9 +8,9 @@
 
 namespace GepurIt\ReportBundle\Tests\ReportType;
 
-use PHPUnit\Framework\TestCase;
-use GepurIt\ReportBundle\CreateCommand\AbstractCreateReportCommand;
+use GepurIt\ReportBundle\Document\AbstractCreateReportCommand;
 use GepurIt\ReportBundle\ReportType\SimpleReportType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class SimpleReportTypeTest

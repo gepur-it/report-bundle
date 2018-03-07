@@ -6,29 +6,21 @@
  * Time: 14:00
  */
 
-namespace GepurIt\ReportBundle\ReportType\ReportDataTypes;
+namespace GepurIt\ReportBundle\DataType;
 
-use GepurIt\ReportBundle\ReportType\ReportDataTypeInterface;
+use Yawa20\RegistryBundle\Registrable\RegistrableInterface;
 
 /**
  * Class Boolean
  * @package ReportBundle\ReportType\ReportDataTypes
  */
-class Boolean implements ReportDataTypeInterface
+class Boolean implements ReportDataTypeInterface, RegistrableInterface
 {
     const NAME = 'boolean';
     /**
      * @var string $typeId
      */
     protected $typeId;
-
-    /**
-     * @return string
-     */
-    public function getTypeId() :string
-    {
-        return self::NAME;
-    }
 
     /**
      * @param mixed $data
@@ -45,5 +37,13 @@ class Boolean implements ReportDataTypeInterface
         }
 
         return (bool) $data;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return self::NAME;
     }
 }

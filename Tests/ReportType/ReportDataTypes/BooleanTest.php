@@ -7,6 +7,7 @@
  */
 namespace GepurIt\ReportBundle\ReportType\ReportDataTypes;
 
+use GepurIt\ReportBundle\DataType\Boolean;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,11 +19,13 @@ class BooleanTest extends TestCase
     public function testGetTypeId()
     {
         $type = new Boolean();
-        $this->assertEquals('boolean', $type->getTypeId());
+        $this->assertEquals('boolean', $type->getKey());
     }
 
     /**
      * @dataProvider dataProvider
+     * @param $expectation
+     * @param $value
      */
     public function testProcess($expectation, $value)
     {

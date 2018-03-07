@@ -8,10 +8,11 @@
 
 namespace GepurIt\ReportBundle\CreateCommand;
 
-use GepurIt\ReportBundle\ReportType\ReportDataTypeRegistry;
+use GepurIt\ReportBundle\DataType\ReportDataTypeInterface;
 use GepurIt\ReportBundle\ReportType\ReportTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Yawa20\RegistryBundle\Registry\RegistryInterface;
 
 /**
  * Class ReportTypeFactory
@@ -20,7 +21,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class ReportCommandRequestFactory
 {
     /**
-     * @var ReportDataTypeRegistry
+     * @var RegistryInterface
      */
     private $registry;
 
@@ -29,10 +30,10 @@ class ReportCommandRequestFactory
 
     /**
      * ReportCommandRequestFactory constructor.
-     * @param ReportDataTypeRegistry $registry
+     * @param RegistryInterface $registry
      * @param PropertyAccessor $accessor
      */
-    public function __construct(ReportDataTypeRegistry $registry, PropertyAccessor $accessor)
+    public function __construct(RegistryInterface $registry, PropertyAccessor $accessor)
     {
         $this->registry = $registry;
         $this->accessor = $accessor;
@@ -58,7 +59,9 @@ class ReportCommandRequestFactory
             }
             $default = $field['default'] ?? null;
             $type = $field['persist_type'] ?? $field['type'];
-            $fieldData = $this->registry->get($type)->process($request->get($field['field'], $default));
+            /** @var ReportDataTypeInterface $dataType */
+            $dataType = $this->registry->get($type);
+            $fieldData = $dataType->process($request->get($field['field'], $default));
             $this->accessor->setValue($command, $field['field'], $fieldData);
         }
 

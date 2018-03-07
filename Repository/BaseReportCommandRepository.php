@@ -6,10 +6,11 @@
  * Time: 15:12
  */
 
-namespace GepurIt\ReportBundle\ReportType;
+namespace GepurIt\ReportBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use GepurIt\ReportBundle\CreateCommand\AbstractCreateReportCommand;
+use GepurIt\ReportBundle\Document\AbstractCreateReportCommand;
+use GepurIt\ReportBundle\ReportType\ReportTypeCommandRepositoryInterface;
 
 /**
  * Class BaseReportCommandRepository

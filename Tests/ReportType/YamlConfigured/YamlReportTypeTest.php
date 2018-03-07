@@ -23,7 +23,7 @@ class YamlReportTypeTest extends TestCase
         $this->assertEquals('label', $type->getLabel());
         $this->assertEquals('resource', $type->getResource());
         $this->assertEquals('role', $type->getRole());
-        $this->assertEquals( $className, $type->getReportClass());
+        $this->assertEquals($className, $type->getReportClass());
         $this->assertEquals([], $type->getReportMeta());
         $this->assertEquals([], $type->getCommandMeta());
     }

@@ -3,20 +3,21 @@
  * Created by PhpStorm.
  * User: pavlov
  * Date: 23.01.18
- * Time: 12:26
+ * Time: 14:04
  */
-namespace GepurIt\ReportBundle\ReportType\ReportDataTypes;
+
+namespace GepurIt\ReportBundle\DataType;
 
 use GepurIt\ReportBundle\Exception\ReportDataTypeException;
-use GepurIt\ReportBundle\ReportType\ReportDataTypeInterface;
+use Yawa20\RegistryBundle\Registrable\RegistrableInterface;
 
 /**
- * Class DateTime
+ * Class Date
  * @package ReportBundle\ReportType\ReportDataTypes
  */
-class DateTime implements ReportDataTypeInterface
+class Date implements ReportDataTypeInterface, RegistrableInterface
 {
-    const NAME = 'datetime';
+    const NAME = 'date';
 
     /**
      * @var string $typeId
@@ -24,17 +25,8 @@ class DateTime implements ReportDataTypeInterface
     protected $typeId;
 
     /**
-     * @return string
-     */
-    public function getTypeId() :string
-    {
-        return self::NAME;
-    }
-
-    /**
      * @param mixed $data
      * @return \DateTime
-     * @throws ReportDataTypeException
      */
     public function process($data)
     {
@@ -45,5 +37,13 @@ class DateTime implements ReportDataTypeInterface
         }
 
         return $dateTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return self::NAME;
     }
 }

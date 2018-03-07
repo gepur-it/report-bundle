@@ -8,6 +8,7 @@
 
 namespace GepurIt\ReportBundle\ReportType\ReportDataTypes;
 
+use GepurIt\ReportBundle\DataType\Date;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class DateTest extends TestCase
     public function testGetTypeId()
     {
         $type = new Date();
-        $this->assertEquals('date', $type->getTypeId());
+        $this->assertEquals('date', $type->getKey());
     }
 
     public function testProcess()

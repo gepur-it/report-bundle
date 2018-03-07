@@ -13,4 +13,3 @@ namespace GepurIt\ReportBundle\Exception;
 class ReportException extends \RuntimeException
 {
 }
-

@@ -8,13 +8,13 @@ namespace GepurIt\ReportBundle\Tests\ReportCommandHandler;
 
 use AMQPExchange;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\Exception\GeneratorNotFoundException;
-use GepurIt\ReportBundle\ReportCommandHandler\RabbitHelper;
+use GepurIt\ReportBundle\Helpers\RabbitHelper;
 use GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler;
 use GepurIt\ReportBundle\ReportGenerator\ReportGeneratorInterface;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ReportCommandHandlerTest
@@ -57,7 +57,7 @@ class ReportCommandHandlerTest extends TestCase
         /** @var AMQPExchange|\PHPUnit_Framework_MockObject_MockObject $exchangeMock */
         $exchangeMock = $this->createMock(AMQPExchange::class);
 
-        /** @var RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
+        /** @var \GepurIt\ReportBundle\Helpers\RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
         $rabbitMock = $this->createMock(RabbitHelper::class);
         $rabbitMock
             ->expects($this->once())
@@ -74,11 +74,10 @@ class ReportCommandHandlerTest extends TestCase
 
     /**
      * @throws \Exception
-     * @throws \ReflectionException
      */
     public function testProcessSuccess()
     {
-        /** @var RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
+        /** @var \GepurIt\ReportBundle\Helpers\RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
         $rabbitMock = $this->createMock(RabbitHelper::class);
 
         /** @var CreateReportCommandInterface|\PHPUnit_Framework_MockObject_MockObject $commandMock */
@@ -101,6 +100,9 @@ class ReportCommandHandlerTest extends TestCase
             ->method('generate')
             ->with($commandMock)
             ->willReturn([]);
+        $generatorMock->expects($this->once())
+            ->method('getKey')
+            ->willReturn(get_class($commandMock));
 
         /** @var DocumentManager|\PHPUnit_Framework_MockObject_MockObject $documentManagerMock */
         $documentManagerMock = $this->createMock(DocumentManager::class);
@@ -123,18 +125,17 @@ class ReportCommandHandlerTest extends TestCase
             $loggerMock,
             $rabbitMock
         );
-        $handler->addGenerator(get_class($commandMock), $generatorMock);
+        $handler->add($generatorMock);
         $res = $handler->process($commandMock);
         $this->assertTrue($res);
     }
 
     /**
      * @throws \Exception
-     * @throws \ReflectionException
      */
     public function testProcessException()
     {
-        /** @var RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
+        /** @var \GepurIt\ReportBundle\Helpers\RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
         $rabbitMock = $this->createMock(RabbitHelper::class);
         /** @var CreateReportCommandInterface|\PHPUnit_Framework_MockObject_MockObject $commandMock */
         $commandMock = $this->createMock(CreateReportCommandInterface::class);
@@ -148,13 +149,17 @@ class ReportCommandHandlerTest extends TestCase
             $loggerMock,
             $rabbitMock
         );
+        $generator = $this->createMock(ReportGeneratorInterface::class);
+        $generator->expects($this->once())
+            ->method('getKey')
+            ->willReturn('trololo');
+        $handler->add($generator);
         $this->expectException(GeneratorNotFoundException::class);
         $handler->process($commandMock);
     }
 
     /**
      * @throws \Exception
-     * @throws \ReflectionException
      */
     public function testProcessErrors()
     {
@@ -162,7 +167,7 @@ class ReportCommandHandlerTest extends TestCase
             'error1',
             'error2'
         ];
-        /** @var RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
+        /** @var \GepurIt\ReportBundle\Helpers\RabbitHelper|\PHPUnit_Framework_MockObject_MockObject $rabbitMock */
         $rabbitMock = $this->createMock(RabbitHelper::class);
 
         /** @var CreateReportCommandInterface|\PHPUnit_Framework_MockObject_MockObject $commandMock */
@@ -195,6 +200,9 @@ class ReportCommandHandlerTest extends TestCase
             ->method('generate')
             ->with($commandMock)
             ->willReturn($errors);
+        $generatorMock->expects($this->once())
+            ->method('getKey')
+            ->willReturn(get_class($commandMock));
 
         /** @var DocumentManager|\PHPUnit_Framework_MockObject_MockObject $documentManagerMock */
         $documentManagerMock = $this->createMock(DocumentManager::class);
@@ -217,7 +225,7 @@ class ReportCommandHandlerTest extends TestCase
             $loggerMock,
             $rabbitMock
         );
-        $handler->addGenerator(get_class($commandMock), $generatorMock);
+        $handler->add($generatorMock);
         $res = $handler->process($commandMock);
         $this->assertNotTrue($res);
     }

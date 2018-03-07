@@ -7,12 +7,13 @@
 namespace GepurIt\ReportBundle\ReportGenerator;
 
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
+use Yawa20\RegistryBundle\Registrable\RegistrableInterface;
 
 /**
  * Interface ReportGeneratorInterface
  * @package ReportBundle\ReportGenerator
  */
-interface ReportGeneratorInterface
+interface ReportGeneratorInterface extends RegistrableInterface
 {
     /**
      * @param $command CreateReportCommandInterface

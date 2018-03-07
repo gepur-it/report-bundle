@@ -4,10 +4,11 @@
  * @since 20.11.17
  */
 
-namespace GepurIt\ReportBundle\CreateCommand;
+namespace GepurIt\ReportBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use DateTime;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 
 /**
  * Class AbstractCreateReportCommand

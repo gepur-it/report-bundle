@@ -4,12 +4,12 @@
  * @since 22.11.17
  */
 
-namespace GepurIt\ReportBundle\Command;
+namespace GepurIt\ReportBundle\ConsoleCommand;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Psr\Log\LoggerInterface;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

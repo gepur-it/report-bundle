@@ -6,13 +6,13 @@
  * Time: 11:02
  */
 
-namespace GepurIt\ReportBundle\Command;
+namespace GepurIt\ReportBundle\ConsoleCommand;
 
 use AMQPEnvelope;
 use AMQPQueue;
-use Psr\Log\LoggerInterface;
 use GepurIt\ReportBundle\CreateCommand\CreateCommandMessage;
-use GepurIt\ReportBundle\ReportCommandHandler\RabbitHelper;
+use GepurIt\ReportBundle\Helpers\RabbitHelper;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,7 +39,7 @@ class RunReportGeneratorCommand extends Command
     /**
      * TransmitMessagesCommand constructor.
      * @param LoggerInterface $logger
-     * @param RabbitHelper $rabbit
+     * @param \GepurIt\ReportBundle\Helpers\RabbitHelper $rabbit
      * @param string $appDir
      */
     public function __construct(LoggerInterface $logger, RabbitHelper $rabbit, string $appDir)

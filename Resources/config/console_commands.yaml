@@ -1,6 +1,6 @@
 services:
     report_runner:
-        class: GepurIt\ReportBundle\Command\RunReportGeneratorCommand
+        class: GepurIt\ReportBundle\ConsoleCommand\RunReportGeneratorCommand
         arguments:
             - "@logger"
             - '@report.rabbit_helper'
@@ -9,7 +9,7 @@ services:
            - { name: 'console.command' }
 
     report_listener:
-        class: GepurIt\ReportBundle\Command\ExecuteReportGeneratorCommand
+        class: GepurIt\ReportBundle\ConsoleCommand\ExecuteReportGeneratorCommand
         arguments:
             - '@report_handler'
             - '@doctrine.odm.mongodb.document_manager'

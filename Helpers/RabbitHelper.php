@@ -4,7 +4,7 @@
  * @since: 16.02.18
  */
 
-namespace GepurIt\ReportBundle\ReportCommandHandler;
+namespace GepurIt\ReportBundle\Helpers;
 
 use AMQPExchange;
 use AMQPQueue;

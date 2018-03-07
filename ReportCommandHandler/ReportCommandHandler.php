@@ -7,20 +7,21 @@
 namespace GepurIt\ReportBundle\ReportCommandHandler;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Psr\Log\LoggerInterface;
 use GepurIt\ReportBundle\CreateCommand\CreateCommandMessage;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\Exception\GeneratorNotFoundException;
+use GepurIt\ReportBundle\Helpers\RabbitHelper;
 use GepurIt\ReportBundle\ReportGenerator\ReportGeneratorInterface;
+use Psr\Log\LoggerInterface;
+use Yawa20\RegistryBundle\Registry\SimpleRegistry;
 
 /**
  * Class ReportCommandHandler
  * @package ReportBundle\ReportCommandHandler
+ * @method ReportGeneratorInterface get(string $key)
  */
-class ReportCommandHandler
+class ReportCommandHandler extends SimpleRegistry
 {
-    /** @var ReportGeneratorInterface[] //map to associate command with concrete generator */
-    private $generatorsMap = [];
     /** @var DocumentManager */
     private $documentManager;
     /** @var LoggerInterface */
@@ -42,6 +43,8 @@ class ReportCommandHandler
         $this->documentManager = $documentManager;
         $this->logger = $logger;
         $this->rabbit = $rabbit;
+
+        parent::__construct(ReportGeneratorInterface::class);
     }
 
     /**
@@ -68,13 +71,13 @@ class ReportCommandHandler
     public function process(CreateReportCommandInterface $createReportCommand)
     {
         $key = get_class($createReportCommand);
-        if (!isset($this->generatorsMap[$key])) {
+        if (!$this->exists($key)) {
             throw new GeneratorNotFoundException($key);
         }
         $createReportCommand->setStatus(CreateReportCommandInterface::STATUS__IN_PROGRESS);
         $this->documentManager->persist($createReportCommand);
         $this->documentManager->flush($createReportCommand);
-        $errors = $this->generatorsMap[$key]->generate($createReportCommand);
+        $errors = $this->get($key)->generate($createReportCommand);
         if (count($errors) > 0) {
             $createReportCommand->setStatus(CreateReportCommandInterface::STATUS__ERROR);
             foreach ($errors as $error) {
@@ -90,15 +93,6 @@ class ReportCommandHandler
         $this->documentManager->flush($createReportCommand);
 
         return true;
-    }
-
-    /**
-     * @param string $commandClass
-     * @param ReportGeneratorInterface $reportGenerator
-     */
-    public function addGenerator(string $commandClass, ReportGeneratorInterface $reportGenerator)
-    {
-        $this->generatorsMap[$commandClass] = $reportGenerator;
     }
 
     /**

@@ -8,6 +8,7 @@
 
 namespace GepurIt\ReportBundle\ReportType\ReportDataTypes;
 
+use GepurIt\ReportBundle\DataType\DateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class DateTimeTest extends TestCase
     public function testGetTypeId()
     {
         $type = new DateTime();
-        $this->assertEquals('datetime', $type->getTypeId());
+        $this->assertEquals('datetime', $type->getKey());
     }
 
     public function testProcess()

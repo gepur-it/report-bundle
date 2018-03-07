@@ -7,8 +7,6 @@
 namespace GepurIt\ReportBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
-use GepurIt\ReportBundle\DependencyInjection\Compiler\ReportGeneratorCompilerPass;
-use GepurIt\ReportBundle\DependencyInjection\Compiler\ReportTypeCompilerPass;
 use GepurIt\ReportBundle\DependencyInjection\ReportExtension;
 use GepurIt\ReportBundle\ReportBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,21 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class ReportBundleTest extends TestCase
 {
-    public function testBundle()
-    {
-        $containerBuilder = $this->getContainerMock();
-
-        $containerBuilder->expects($this->at(0))
-            ->method('addCompilerPass')
-            ->with($this->isInstanceOf(ReportGeneratorCompilerPass::class));
-
-        $containerBuilder->expects($this->at(1))
-            ->method('addCompilerPass')
-            ->with($this->isInstanceOf(ReportTypeCompilerPass::class));
-
-        $bundle = new ReportBundle();
-        $bundle->build($containerBuilder);
-    }
 
     public function testGetContainerExtension()
     {

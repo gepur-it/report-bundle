@@ -33,7 +33,7 @@ class ReportExtension extends BaseExtension
     {
         $this->container = $container;
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
@@ -87,7 +87,7 @@ class ReportExtension extends BaseExtension
                 default:
                     $definition = $this->getYamlReportTypeDefinition($name, $paths, $typeConfig);
             }
-            $registryDefinition->addMethodCall('register', [$definition]);
+            $registryDefinition->addMethodCall('add', [$definition]);
         }
     }
 
