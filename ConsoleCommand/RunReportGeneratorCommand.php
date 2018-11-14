@@ -89,7 +89,7 @@ class RunReportGeneratorCommand extends Command
                 $command,
                 $commandMessage->commandClass,
                 $commandMessage->commandId,
-            ]
+            ], null, null, null, null
         );
         $process->run([$this, 'displayOutput']);
         if ($process->getExitCode() === 0) {
