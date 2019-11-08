@@ -9,6 +9,7 @@ namespace GepurIt\ReportBundle\ConsoleCommand;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler;
+use GepurIt\SingleInstanceCommandBundle\Contract\SingleInstanceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class ExecuteListenReportQueueCommand
  * @package ReportBundle\Command
  */
-class ExecuteReportGeneratorCommand extends Command
+class ExecuteReportGeneratorCommand extends Command implements SingleInstanceInterface
 {
     /** @var \GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler */
     private $commandHandler;
@@ -86,5 +87,17 @@ class ExecuteReportGeneratorCommand extends Command
         }
 
         $this->commandHandler->process($command);
+    }
+    
+    /**
+     * get`s lock name for command execution, based on input
+     *
+     * @param InputInterface $input
+     *
+     * @return string
+     */
+    public function getLockName(InputInterface $input): string
+    {
+        return $this->getName();
     }
 }
