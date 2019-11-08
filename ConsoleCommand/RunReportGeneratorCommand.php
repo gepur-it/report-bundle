@@ -12,6 +12,7 @@ use AMQPEnvelope;
 use AMQPQueue;
 use GepurIt\ReportBundle\CreateCommand\CreateCommandMessage;
 use GepurIt\ReportBundle\Helpers\RabbitHelper;
+use GepurIt\SingleInstanceCommandBundle\Contract\SingleInstanceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,7 +24,7 @@ use Symfony\Component\Process\Process;
  * @package ReportBundle\Command
  * @codeCoverageIgnore
  */
-class RunReportGeneratorCommand extends Command
+class RunReportGeneratorCommand extends Command implements SingleInstanceInterface
 {
     /** @var LoggerInterface */
     private $logger;
@@ -122,5 +123,17 @@ class RunReportGeneratorCommand extends Command
         $queue = $this->rabbit->getQueue();
 
         $queue->consume([$this, 'processEnvelope']);
+    }
+    
+    /**
+     * get`s lock name for command execution, based on input
+     *
+     * @param InputInterface $input
+     *
+     * @return string
+     */
+    public function getLockName(InputInterface $input): string
+    {
+        return $this->getName();
     }
 }
