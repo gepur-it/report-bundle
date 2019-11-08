@@ -15,7 +15,6 @@
         "symfony/config": ">=4.0",
         "symfony/yaml": ">=4.0",
         "gepur-it/rabbitmq-bundle": "^1.0",
-        "gepur-it/sic-bundle": "^4.3",
         "symfony/console": ">=4.0",
         "symfony/process": "^4.0",
         "symfony/finder": "^4.0",
