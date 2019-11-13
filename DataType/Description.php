@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: pavlov
- * Date: 23.01.18
- * Time: 13:14
+ * @author Marina <m934222258@gmail.com>
+ * @since 13.11.19
  */
 
 namespace GepurIt\ReportBundle\DataType;
