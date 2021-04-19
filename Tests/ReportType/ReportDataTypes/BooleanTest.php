@@ -37,7 +37,7 @@ class BooleanTest extends TestCase
     /**
      * @return array
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             [false, 'false'],

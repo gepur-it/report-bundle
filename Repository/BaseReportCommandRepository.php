@@ -8,7 +8,10 @@
 
 namespace GepurIt\ReportBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
+//use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\MongoDBException;
+use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use GepurIt\ReportBundle\Document\AbstractCreateReportCommand;
 use GepurIt\ReportBundle\ReportType\ReportTypeCommandRepositoryInterface;
 
@@ -16,9 +19,18 @@ use GepurIt\ReportBundle\ReportType\ReportTypeCommandRepositoryInterface;
  * Class BaseReportCommandRepository
  * @package ReportBundle\ReportType
  */
-class BaseReportCommandRepository extends DocumentRepository implements ReportTypeCommandRepositoryInterface
+class BaseReportCommandRepository extends ServiceDocumentRepository implements ReportTypeCommandRepositoryInterface
 {
-     /**
+    /**
+     * BaseReportCommandRepository constructor.
+     * @param ManagerRegistry $registry
+     */
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, AbstractCreateReportCommand::class);
+    }
+
+    /**
      * @param array $fields
      * @param int $limit
      * @param int $skip
@@ -38,7 +50,7 @@ class BaseReportCommandRepository extends DocumentRepository implements ReportTy
 
     /**
      * @return int
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function count(): int
     {

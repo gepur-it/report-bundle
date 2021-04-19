@@ -31,7 +31,7 @@ class YamlReportTypeTest extends TestCase
     /**
      * @return array
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return [
             'type' => [

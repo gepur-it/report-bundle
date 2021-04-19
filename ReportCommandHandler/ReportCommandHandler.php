@@ -7,6 +7,7 @@
 namespace GepurIt\ReportBundle\ReportCommandHandler;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use GepurIt\ReportBundle\CreateCommand\CreateCommandMessage;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\Exception\GeneratorNotFoundException;
@@ -54,11 +55,12 @@ class ReportCommandHandler extends SimpleRegistry
      * @throws \AMQPConnectionException
      * @throws \AMQPExchangeException
      * @throws \AMQPQueueException
+     * @throws MongoDBException
      */
     public function push(CreateReportCommandInterface $createReportCommand)
     {
         $this->documentManager->persist($createReportCommand);
-        $this->documentManager->flush($createReportCommand);
+        $this->documentManager->flush();
         $this->addToRabbitQueue($createReportCommand);
     }
 
@@ -76,7 +78,7 @@ class ReportCommandHandler extends SimpleRegistry
         }
         $createReportCommand->setStatus(CreateReportCommandInterface::STATUS__IN_PROGRESS);
         $this->documentManager->persist($createReportCommand);
-        $this->documentManager->flush($createReportCommand);
+        $this->documentManager->flush();
         $errors = $this->get($key)->generate($createReportCommand);
         if (count($errors) > 0) {
             $createReportCommand->setStatus(CreateReportCommandInterface::STATUS__ERROR);
@@ -84,13 +86,13 @@ class ReportCommandHandler extends SimpleRegistry
                 $createReportCommand->addError($error);
             }
             $this->documentManager->persist($createReportCommand);
-            $this->documentManager->flush($createReportCommand);
+            $this->documentManager->flush();
 
             return false;
         }
         $createReportCommand->setStatus(CreateReportCommandInterface::STATUS__FINISHED);
         $this->documentManager->persist($createReportCommand);
-        $this->documentManager->flush($createReportCommand);
+        $this->documentManager->flush();
 
         return true;
     }

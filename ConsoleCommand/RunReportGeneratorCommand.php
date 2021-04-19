@@ -26,21 +26,16 @@ use Symfony\Component\Process\Process;
  */
 class RunReportGeneratorCommand extends Command implements SingleInstanceInterface
 {
-    /** @var LoggerInterface */
-    private $logger;
-    /** @var InputInterface */
-    private $input;
-    /** @var OutputInterface */
-    private $output;
-    /** @var string */
-    private $appDir;
-    /** @var RabbitHelper */
-    private $rabbit;
+    private LoggerInterface $logger;
+    private string $appDir;
+    private RabbitHelper $rabbit;
+    private InputInterface $input;
+    private OutputInterface $output;
 
     /**
      * TransmitMessagesCommand constructor.
      * @param LoggerInterface $logger
-     * @param \GepurIt\ReportBundle\Helpers\RabbitHelper $rabbit
+     * @param RabbitHelper $rabbit
      * @param string $appDir
      */
     public function __construct(LoggerInterface $logger, RabbitHelper $rabbit, string $appDir)
@@ -74,9 +69,7 @@ class RunReportGeneratorCommand extends Command implements SingleInstanceInterfa
      */
     public function processEnvelope(AMQPEnvelope $envelope, AMQPQueue $queue)
     {
-        /** @var string $bodyString */
         $bodyString = $envelope->getBody();
-        /** @var CreateCommandMessage $commandMessage */
         $commandMessage = new CreateCommandMessage(\json_decode($bodyString));
         $php = "/usr/bin/php";
         $console = $this->appDir."/bin/console";
@@ -110,19 +103,21 @@ class RunReportGeneratorCommand extends Command implements SingleInstanceInterfa
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return int
      * @throws \AMQPChannelException
      * @throws \AMQPConnectionException
      * @throws \AMQPQueueException
      * @uses displayOutput
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = $output;
         $queue = $this->rabbit->getQueue();
 
         $queue->consume([$this, 'processEnvelope']);
+
+        return 0;
     }
     
     /**

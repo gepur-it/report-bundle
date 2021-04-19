@@ -7,11 +7,13 @@
 namespace GepurIt\ReportBundle\Tests;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+//use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use GepurIt\ReportBundle\ConsoleCommand\ExecuteReportGeneratorCommand;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\Exception\GeneratorNotFoundException;
 use GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,10 +42,10 @@ class ExecuteReportGeneratorCommandTest extends TestCase
                     return $arr[$argument];
                 }
             );
-        /** @var CreateReportCommandInterface|\PHPUnit_Framework_MockObject_MockObject $commandMock */
+        /** @var CreateReportCommandInterface|MockObject $commandMock */
         $commandMock = $this->createMock(CreateReportCommandInterface::class);
 
-        /** @var ReportCommandHandler|\PHPUnit_Framework_MockObject_MockObject $handlerMock */
+        /** @var ReportCommandHandler|MockObject $handlerMock */
         $handlerMock = $this->createMock(ReportCommandHandler::class);
         $handlerMock
             ->expects($this->once())
@@ -51,7 +53,7 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->with($commandMock)
             ->willReturn(true);
 
-        /** @var DocumentRepository|\PHPUnit_Framework_MockObject_MockObject $documentRepository */
+        /** @var DocumentRepository|MockObject $documentRepository */
         $documentRepository = $this->createMock(DocumentRepository::class);
         $documentRepository
             ->expects($this->once())
@@ -59,14 +61,14 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->with($commandId)
             ->willReturn($commandMock);
 
-        /** @var DocumentManager|\PHPUnit_Framework_MockObject_MockObject $documentManager */
+        /** @var DocumentManager|MockObject $documentManager */
         $documentManager = $this->createMock(DocumentManager::class);
         $documentManager
             ->expects($this->once())
             ->method('getRepository')
             ->with($commandClass)
             ->willReturn($documentRepository);
-        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $loggerMock */
+        /** @var LoggerInterface|MockObject $loggerMock */
         $loggerMock = $this->createMock(LoggerInterface::class);
         $listener = new ExecuteReportGeneratorCommand($handlerMock, $documentManager, $loggerMock);
 
@@ -95,9 +97,9 @@ class ExecuteReportGeneratorCommandTest extends TestCase
                 }
             );
 
-        /** @var ReportCommandHandler|\PHPUnit_Framework_MockObject_MockObject $handlerMock */
+        /** @var ReportCommandHandler|MockObject $handlerMock */
         $handlerMock = $this->createMock(ReportCommandHandler::class);
-        /** @var DocumentRepository|\PHPUnit_Framework_MockObject_MockObject $documentRepository */
+        /** @var DocumentRepository|MockObject $documentRepository */
         $documentRepository = $this->createMock(DocumentRepository::class);
         $documentRepository
             ->expects($this->once())
@@ -105,7 +107,7 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->with($commandId)
             ->willReturn(null);
 
-        /** @var DocumentManager|\PHPUnit_Framework_MockObject_MockObject $documentManager */
+        /** @var DocumentManager|MockObject $documentManager */
         $documentManager = $this->createMock(DocumentManager::class);
         $documentManager
             ->expects($this->once())
@@ -114,7 +116,7 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->willReturn($documentRepository);
 
         $message = 'command '.$commandClass.' with id '.$commandId.' not found';
-        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $loggerMock */
+        /** @var LoggerInterface|MockObject $loggerMock */
         $loggerMock = $this->createMock(LoggerInterface::class);
         $loggerMock
             ->expects($this->once())
@@ -147,10 +149,10 @@ class ExecuteReportGeneratorCommandTest extends TestCase
                 }
             );
 
-        /** @var GeneratorNotFoundException|\PHPUnit_Framework_MockObject_MockObject $exception */
+        /** @var GeneratorNotFoundException|MockObject $exception */
         $exception = $this->createMock(GeneratorNotFoundException::class);
 
-        /** @var CreateReportCommandInterface|\PHPUnit_Framework_MockObject_MockObject $commandMock */
+        /** @var CreateReportCommandInterface|MockObject $commandMock */
         $commandMock = $this->createMock(CreateReportCommandInterface::class);
         $commandMock
             ->expects($this->never())
@@ -159,7 +161,7 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->expects($this->never())
             ->method('addError');
 
-        /** @var ReportCommandHandler|\PHPUnit_Framework_MockObject_MockObject $handlerMock */
+        /** @var ReportCommandHandler|MockObject $handlerMock */
         $handlerMock = $this->createMock(ReportCommandHandler::class);
         $handlerMock
             ->expects($this->once())
@@ -167,7 +169,7 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->with($commandMock)
             ->willThrowException($exception);
 
-        /** @var DocumentRepository|\PHPUnit_Framework_MockObject_MockObject $documentRepository */
+        /** @var DocumentRepository|MockObject $documentRepository */
         $documentRepository = $this->createMock(DocumentRepository::class);
         $documentRepository
             ->expects($this->once())
@@ -175,7 +177,7 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->with($commandId)
             ->willReturn($commandMock);
 
-        /** @var DocumentManager|\PHPUnit_Framework_MockObject_MockObject $documentManager */
+        /** @var DocumentManager|MockObject $documentManager */
         $documentManager = $this->createMock(DocumentManager::class);
         $documentManager
             ->expects($this->once())
@@ -189,7 +191,7 @@ class ExecuteReportGeneratorCommandTest extends TestCase
             ->expects($this->never())
             ->method('flush');
 
-        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $loggerMock */
+        /** @var LoggerInterface|MockObject $loggerMock */
         $loggerMock = $this->createMock(LoggerInterface::class);
 
         $listener = new ExecuteReportGeneratorCommand($handlerMock, $documentManager, $loggerMock);

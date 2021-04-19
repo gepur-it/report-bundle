@@ -36,7 +36,7 @@ class StringDataTest extends TestCase
     /**
      * @return array
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             ['1'],
@@ -59,7 +59,7 @@ class StringDataTest extends TestCase
     /**
      * @return array
      */
-    public function exceptionDataProvider()
+    public function exceptionDataProvider(): array
     {
         return [
             [[]],

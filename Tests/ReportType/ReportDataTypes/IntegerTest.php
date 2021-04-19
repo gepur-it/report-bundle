@@ -36,7 +36,7 @@ class IntegerTest extends TestCase
     /**
      * @return array
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             ['1'],

@@ -13,6 +13,7 @@ use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 use GepurIt\ReportBundle\CreateCommand\ReportCommandRequestFactory;
 use GepurIt\ReportBundle\DataType\ReportDataTypeInterface;
 use GepurIt\ReportBundle\ReportType\ReportTypeInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -31,11 +32,11 @@ class ReportCommandRequestFactoryTest extends TestCase
      */
     public function testCreateWritable()
     {
-        /** @var SimpleRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        /** @var SimpleRegistry|MockObject $registry */
         $registry = $this->createMock(SimpleRegistry::class);
-        /** @var PropertyAccessor|\PHPUnit_Framework_MockObject_MockObject $propertyAccessor */
+        /** @var PropertyAccessor|MockObject $propertyAccessor */
         $propertyAccessor = $this->createMock(PropertyAccessor::class);
-        /** @var ReportTypeInterface|\PHPUnit_Framework_MockObject_MockObject $reportType */
+        /** @var ReportTypeInterface|MockObject $reportType */
         $reportType = $this->createMock(ReportTypeInterface::class);
         $dataType = new TestDataType();
 
@@ -44,7 +45,7 @@ class ReportCommandRequestFactoryTest extends TestCase
             ->with('string')
             ->willReturn($dataType);
 
-        /** @var Request|\PHPUnit_Framework_MockObject_MockObject $request */
+        /** @var Request|MockObject $request */
         $request = $this->createMock(Request::class);
 
         $factory = new ReportCommandRequestFactory($registry, $propertyAccessor);
@@ -64,18 +65,17 @@ class ReportCommandRequestFactoryTest extends TestCase
     }
 
     /**
-     * @throws \ReflectionException
      * @throws \TypeError
      */
     public function testCreateNotWritable()
     {
-        /** @var SimpleRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        /** @var SimpleRegistry|MockObject $registry */
         $registry = $this->createMock(SimpleRegistry::class);
-        /** @var PropertyAccessor|\PHPUnit_Framework_MockObject_MockObject $propertyAccessor */
+        /** @var PropertyAccessor|MockObject $propertyAccessor */
         $propertyAccessor = $this->createMock(PropertyAccessor::class);
-        /** @var ReportTypeInterface|\PHPUnit_Framework_MockObject_MockObject $reportType */
+        /** @var ReportTypeInterface|MockObject $reportType */
         $reportType = $this->createMock(ReportTypeInterface::class);
-        /** @var Request|\PHPUnit_Framework_MockObject_MockObject $request */
+        /** @var Request|MockObject $request */
         $request = $this->createMock(Request::class);
 
         $factory = new ReportCommandRequestFactory($registry, $propertyAccessor);

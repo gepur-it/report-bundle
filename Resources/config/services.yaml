@@ -43,3 +43,5 @@ services:
         arguments:
             - '@report.data_type_registry'
             - '@property_accessor'
+
+    Doctrine\Bundle\MongoDBBundle\ManagerRegistry: '@doctrine_mongodb'

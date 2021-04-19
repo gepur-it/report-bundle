@@ -22,24 +22,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ExecuteReportGeneratorCommand extends Command implements SingleInstanceInterface
 {
-    /** @var \GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler */
-    private $commandHandler;
-
-    /** @var DocumentManager */
-    private $documentManager;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var InputInterface */
-    private $input;
-
-    /** @var OutputInterface */
-    private $output;
+    private ReportCommandHandler $commandHandler;
+    private DocumentManager $documentManager;
+    private LoggerInterface $logger;
+    private InputInterface $input;
+    private OutputInterface $output;
 
     /**
      * ListenReportQueueCommand constructor.
-     * @param \GepurIt\ReportBundle\ReportCommandHandler\ReportCommandHandler $commandHandler
+     * @param ReportCommandHandler $commandHandler
      * @param DocumentManager $documentManager
      * @param LoggerInterface $logger
      */
@@ -68,13 +59,14 @@ class ExecuteReportGeneratorCommand extends Command implements SingleInstanceInt
      * @uses processEnvelope
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return int
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = $output;
+
         $commandClass = $input->getArgument("command_class");
         $commandId = $input->getArgument("command_id");
 
@@ -82,11 +74,11 @@ class ExecuteReportGeneratorCommand extends Command implements SingleInstanceInt
         $command = $this->documentManager->getRepository($commandClass)->find($commandId);
         if (null === $command) {
             $this->logger->error("command {$commandClass} with id {$commandId} not found");
-
-            return;
+            return 1;
         }
 
         $this->commandHandler->process($command);
+        return 0;
     }
     
     /**
