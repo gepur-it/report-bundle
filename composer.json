@@ -1,5 +1,6 @@
 {
     "name": "gepur-it/report-bundle",
+    "version": "2.0.0",
     "description": "Gepur ERP Report generation bundle",
     "type": "symfony-bundle",
     "keywords": [
@@ -10,18 +11,18 @@
     "homepage": "https://github.com/gepur-it/report-bundle",
     "require": {
         "ext-amqp": "*",
-        "php": "^7.0",
+        "php": "^7.4|^8.0",
         "symfony/dependency-injection": ">=4.0",
         "symfony/config": ">=4.0",
         "symfony/yaml": ">=4.0",
-        "gepur-it/rabbitmq-bundle": "^1.0",
-        "gepur-it/sic-bundle": "^4.3",
-        "symfony/console": ">=4.0",
-        "symfony/process": "^4.0",
-        "symfony/finder": "^4.0",
-        "doctrine/mongodb-odm-bundle": "^3.4",
-        "symfony/property-access": "^4.0",
-        "yawa20/registry-bundle": "^1.0"
+        "gepur-it/rabbitmq-bundle": "^5.3",
+        "gepur-it/sic-bundle": "^6.0",
+        "symfony/console": "^5.0",
+        "symfony/process": "^5.0",
+        "symfony/finder": "^5.0",
+        "doctrine/mongodb-odm-bundle": "^4.3",
+        "symfony/property-access": "^5.0",
+        "yawa20/registry-bundle": "^5.0"
     },
     "license": "MIT",
     "authors": [
@@ -40,9 +41,9 @@
         }
     },
     "provide": {
-        "ext-mongo": "1.6.14"
+        "ext-mongodb": "^1.6"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^7.0|^8.0"
     }
 }
