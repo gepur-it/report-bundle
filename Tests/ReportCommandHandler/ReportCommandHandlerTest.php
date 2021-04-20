@@ -49,7 +49,6 @@ class ReportCommandHandlerTest extends TestCase
         $documentManagerMock
             ->expects($this->once())
             ->method('flush')
-            ->with($commandMock)
             ->willReturn(null);
 
         /** @var LoggerInterface|MockObject $loggerMock */
@@ -115,7 +114,6 @@ class ReportCommandHandlerTest extends TestCase
         $documentManagerMock
             ->expects($this->exactly(2))
             ->method('flush')
-            ->with($commandMock)
             ->willReturn(null);
 
         /** @var LoggerInterface|MockObject $loggerMock */
@@ -215,7 +213,6 @@ class ReportCommandHandlerTest extends TestCase
         $documentManagerMock
             ->expects($this->exactly(2))
             ->method('flush')
-            ->with($commandMock)
             ->willReturn(null);
 
         /** @var LoggerInterface|MockObject $loggerMock */
