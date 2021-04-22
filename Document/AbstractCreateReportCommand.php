@@ -13,9 +13,6 @@ use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 /**
  * Class AbstractCreateReportCommand
  * @package ReportBundle\CreateCommand
- * @MongoDB\Document(
- *      repositoryClass="ReportBundle\ReportType\BaseReportCommandRepository"
- * )
  * @MongoDB\MappedSuperclass()
  * @MongoDB\InheritanceType("COLLECTION_PER_CLASS")
  * @MongoDB\HasLifecycleCallbacks()
@@ -27,25 +24,25 @@ abstract class AbstractCreateReportCommand implements CreateReportCommandInterfa
      * @MongoDB\Id(strategy="UUID")
      * @var string
      */
-    protected $commandId;
+    protected string $commandId = '';
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      * @MongoDB\Field(type="date")
      * @MongoDB\Index(order="desc")
      */
-    protected $createdAt;
+    protected ?DateTime $createdAt = null;
 
     /**
      * @var int
      * @MongoDB\Field(type="integer")
      */
-    protected $status = CreateReportCommandInterface::STATUS__NEW;
+    protected int $status = CreateReportCommandInterface::STATUS__NEW;
     /**
      * @var array
      * @MongoDB\Field(type="collection")
      */
-    protected $errors = [];
+    protected iterable $errors = [];
 
     /**
      * @return string
@@ -58,7 +55,7 @@ abstract class AbstractCreateReportCommand implements CreateReportCommandInterfa
     /**
      * @param string $commandId
      */
-    public function setCommandId($commandId)
+    public function setCommandId(string $commandId)
     {
         $this->commandId = $commandId;
     }

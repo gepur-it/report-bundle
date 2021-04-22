@@ -9,7 +9,6 @@
 namespace GepurIt\ReportBundle\Repository;
 
 use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
-//use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use GepurIt\ReportBundle\Document\AbstractCreateReportCommand;
