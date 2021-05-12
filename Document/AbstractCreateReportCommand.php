@@ -35,7 +35,7 @@ abstract class AbstractCreateReportCommand implements CreateReportCommandInterfa
 
     /**
      * @var int
-     * @MongoDB\Field(type="integer")
+     * @MongoDB\Field(type="int")
      */
     protected int $status = CreateReportCommandInterface::STATUS__NEW;
     /**
