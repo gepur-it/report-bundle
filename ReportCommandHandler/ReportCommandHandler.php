@@ -14,6 +14,7 @@ use GepurIt\ReportBundle\Exception\GeneratorNotFoundException;
 use GepurIt\ReportBundle\Helpers\RabbitHelper;
 use GepurIt\ReportBundle\ReportGenerator\ReportGeneratorInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Uid\Uuid;
 use Yawa20\RegistryBundle\Registry\SimpleRegistry;
 
 /**
@@ -60,6 +61,9 @@ class ReportCommandHandler extends SimpleRegistry
     public function push(CreateReportCommandInterface $createReportCommand)
     {
         $this->documentManager->persist($createReportCommand);
+        if (empty($createReportCommand->getCommandId())) {
+            $createReportCommand->setCommandId(Uuid::v4()->toRfc4122());
+        }
         $this->documentManager->flush();
         $this->addToRabbitQueue($createReportCommand);
     }
