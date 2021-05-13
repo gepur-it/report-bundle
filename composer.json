@@ -1,6 +1,6 @@
 {
     "name": "gepur-it/report-bundle",
-    "version": "2.1.4",
+    "version": "2.1.5",
     "description": "Gepur ERP Report generation bundle",
     "type": "symfony-bundle",
     "keywords": [

@@ -9,6 +9,7 @@ namespace GepurIt\ReportBundle\Document;
 use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Class AbstractCreateReportCommand
@@ -21,7 +22,7 @@ use GepurIt\ReportBundle\CreateCommand\CreateReportCommandInterface;
 abstract class AbstractCreateReportCommand implements CreateReportCommandInterface
 {
     /**
-     * @MongoDB\Id(strategy="UUID")
+     * @MongoDB\Id(strategy="NONE", type="string")
      * @var string
      */
     protected string $commandId = '';
@@ -38,11 +39,22 @@ abstract class AbstractCreateReportCommand implements CreateReportCommandInterfa
      * @MongoDB\Field(type="int")
      */
     protected int $status = CreateReportCommandInterface::STATUS__NEW;
+
     /**
      * @var array
      * @MongoDB\Field(type="collection")
      */
     protected iterable $errors = [];
+
+
+    /**
+     * AbstractCreateReportCommand constructor.
+     */
+    public function __construct()
+    {
+        $this->commandId = Uuid::v4()->toRfc4122();
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * @return string

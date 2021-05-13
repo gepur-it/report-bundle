@@ -20,13 +20,8 @@ use Yawa20\RegistryBundle\Registry\RegistryInterface;
  */
 class ReportCommandRequestFactory
 {
-    /**
-     * @var RegistryInterface
-     */
-    private $registry;
-
-    /** @var PropertyAccessor  */
-    private $accessor;
+    private RegistryInterface $registry;
+    private PropertyAccessor $accessor;
 
     /**
      * ReportCommandRequestFactory constructor.
