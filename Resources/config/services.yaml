@@ -45,8 +45,3 @@ services:
             - '@property_accessor'
 
     Doctrine\Bundle\MongoDBBundle\ManagerRegistry: '@doctrine_mongodb'
-
-    GepurIt\ReportBundle\Repository\:
-        autowire: true
-        resource: '../../Repository'
-        tags: ['doctrine_mongodb.odm.repository_service']

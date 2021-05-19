@@ -14,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Class AbstractCreateReportCommand
  * @package ReportBundle\CreateCommand
- * @MongoDB\MappedSuperclass()
+ * @MongoDB\MappedSuperclass(repositoryClass="GepurIt\ReportBundle\Repository\BaseReportCommandRepository")
  * @MongoDB\InheritanceType("COLLECTION_PER_CLASS")
  * @MongoDB\HasLifecycleCallbacks()
  * @codeCoverageIgnore

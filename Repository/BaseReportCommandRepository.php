@@ -8,9 +8,8 @@
 
 namespace GepurIt\ReportBundle\Repository;
 
-use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 use Doctrine\ODM\MongoDB\MongoDBException;
-use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use GepurIt\ReportBundle\Document\AbstractCreateReportCommand;
 use GepurIt\ReportBundle\ReportType\ReportTypeCommandRepositoryInterface;
 
@@ -18,17 +17,8 @@ use GepurIt\ReportBundle\ReportType\ReportTypeCommandRepositoryInterface;
  * Class BaseReportCommandRepository
  * @package ReportBundle\ReportType
  */
-class BaseReportCommandRepository extends ServiceDocumentRepository implements ReportTypeCommandRepositoryInterface
+class BaseReportCommandRepository extends DocumentRepository implements ReportTypeCommandRepositoryInterface
 {
-    /**
-     * BaseReportCommandRepository constructor.
-     * @param ManagerRegistry $registry
-     */
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, AbstractCreateReportCommand::class);
-    }
-
     /**
      * @param array $fields
      * @param int $limit
