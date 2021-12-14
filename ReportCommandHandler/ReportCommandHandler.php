@@ -110,6 +110,6 @@ class ReportCommandHandler extends SimpleRegistry
         $message->commandId = $commandId;
 
         $exchange = $this->rabbit->getExchange();
-        $exchange->publish(json_encode($message), RabbitHelper::QUEUE__NAME);
+        $exchange->publish(json_encode($message), RabbitHelper::QUEUE__NAME, AMQP_NOPARAM, ['delivery_mode' => 2]);
     }
 }
